@@ -1,8 +1,31 @@
 # Focus Timbarr
 
+Made to help you focus on your work, and know how much time you spend on it.
+
+Started with an idea, built a quick design on Figma, and gave it to Antigravity to build this app.
+
+## Figma Design
+
+![Figma Design](./focus-timbarr-ui-figma.png)
+
+This was an initial exploration. Once Antigravity built the app, I realized that the design was a good starting point for a desktop app. But there was more possible. So I decided to add to the design some more functionality and controls.
+
+## How it works aka Features
+
+Open FocusTimbarr, set a timer, and start working. That's it.
+
+Want more? Fine.
+
+- Choose a different duration.
+- Set a task message. Okay, with an emoji if that's what you want.
+- Change the colors? Why not.
+
+Enough. Now get to work, okay?
+
 ## Known Issues
 
-- The app is not resizable - it's a feature.
+- The app is not resizable - it's a feature. It's supposed to be full-width of your screen and sit at the top. (In a future version I am considering a vertical bar on the right side for now, but some UI controls will become an issue.)
+
 - The app is not closable - it's a bug.
 - The app is not draggable - it's a bug.
 
@@ -11,7 +34,7 @@
   - Option 2 is heavy so not attempting with the current system state.
 - Developing for Windows from WSL is a annoying due to Wayland/X11 WSLg whatever issues there are.
 
-## Building for Windows from WSL
+## Building for Windows from WSL - NOT TESTED SUCCESSFULY
 
 ### Option 1: The Fast Way (Native Windows Host)
 
@@ -30,3 +53,11 @@ pnpm tauri build
 ### Option 2: The Hard Way (Cross-Compiling from inside WSL)
 
 If you do not have Rust/Node installed on Windows, we can cross-compile it directly from this WSL Linux terminal. However, be warned that compiling Windows binaries from Linux requires setting up a few extra heavy toolchains (mingw-w64 C++ compilers, nsis installer packager, and the Rust GNU target).
+
+## ⚠️ Not ready for primetime
+
+This is a work in progress.
+
+## License
+
+TBD.
