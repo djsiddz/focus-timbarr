@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/700.css";
+
+:root {
+  font-family: 'Geist Mono', monospace;
+  background-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  background-color: transparent;
+}
