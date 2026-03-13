@@ -19,6 +19,8 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
     const { settings, setSettings } = useSettings();
     const [msg, setMsg] = useState(settings.focusMessage);
     const [emoji, setEmoji] = useState(settings.focusEmoji);
+    const [isAddingPreset, setIsAddingPreset] = useState(false);
+    const [newPresetValue, setNewPresetValue] = useState(15);
 
     const handleSave = () => {
         // Emojis can be complex multi-byte zero-width joiners up to ~10 chars long, don't slice strictly to 2.
@@ -30,12 +32,12 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
         setSettings({ timerPresets: settings.timerPresets.filter(p => p !== val) });
     };
 
-    const handleAddPreset = () => {
-        if (settings.timerPresets.length >= 6) return;
-        const newVal = parseInt(prompt("Enter preset length (minutes):") || "0");
-        if (newVal > 0 && !settings.timerPresets.includes(newVal)) {
-            setSettings({ timerPresets: [...settings.timerPresets, newVal].sort((a, b) => a - b) });
+    const confirmAddPreset = () => {
+        const val = Math.max(1, Math.min(120, newPresetValue));
+        if (!settings.timerPresets.includes(val)) {
+            setSettings({ timerPresets: [...settings.timerPresets, val].sort((a, b) => a - b) });
         }
+        setIsAddingPreset(false);
     };
 
     return (
@@ -74,12 +76,36 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     </div>
                 ))}
                 {settings.timerPresets.length < 6 && (
-                    <button
-                        className="text-[#A3A3A3] hover:text-white transition-colors"
-                        onClick={handleAddPreset}
-                    >
-                        <PlusSignIcon size={14} />
-                    </button>
+                    isAddingPreset ? (
+                        <div className="flex items-center space-x-1">
+                            <input
+                                autoFocus
+                                type="number"
+                                className="bg-[#2A2A2A] text-white px-2 py-0.5 rounded w-12 text-[10px] outline-none focus:ring-1 focus:ring-white border-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                value={newPresetValue}
+                                onChange={(e) => setNewPresetValue(parseInt(e.target.value) || 0)}
+                                min={1}
+                                max={120}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') confirmAddPreset();
+                                    if (e.key === 'Escape') setIsAddingPreset(false);
+                                }}
+                            />
+                            <button className="text-green-500 hover:text-green-400 cursor-pointer" onClick={confirmAddPreset}>
+                                <Tick01Icon size={12} />
+                            </button>
+                            <button className="text-red-500 hover:text-red-400 cursor-pointer" onClick={() => setIsAddingPreset(false)}>
+                                <Cancel01Icon size={12} />
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            className="text-[#A3A3A3] hover:text-white transition-colors cursor-pointer"
+                            onClick={() => setIsAddingPreset(true)}
+                        >
+                            <PlusSignIcon size={14} />
+                        </button>
+                    )
                 )}
             </div>
 
